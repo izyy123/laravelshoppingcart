@@ -69,6 +69,8 @@ class Cart
      */
     protected $currentItemId;
 
+    protected $tempCart;
+
     /**
      * our object constructor
      *
@@ -105,6 +107,8 @@ class Cart
         $this->sessionKey = $sessionKey;
         $this->sessionKeyCartItems = $this->sessionKey . '_cart_items';
         $this->sessionKeyCartConditions = $this->sessionKey . '_cart_conditions';
+
+        $this->tempCart = $this->getContentFromStorage();
 
         return $this;
     }
@@ -347,6 +351,8 @@ class Cart
             $this->sessionKeyCartItems,
             array()
         );
+
+        $this->tempCart = new CartCollection(array());
 
         $this->fireEvent('cleared');
         return true;
@@ -672,6 +678,10 @@ class Cart
      */
     public function getContent()
     {
+        return $this->tempCart;
+    }
+
+    public function getContentFromStorage() {
         return (new CartCollection($this->storage->get($this->sessionKeyCartItems)))->reject(function($item) {
             return ! ($item instanceof ItemCollection);
         });
@@ -743,6 +753,7 @@ class Cart
      */
     protected function save($cart)
     {
+        $this->tempCart = $cart;
         $this->storage->put($this->sessionKeyCartItems, $cart);
     }
 
