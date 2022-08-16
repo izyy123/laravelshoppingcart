@@ -22,7 +22,7 @@ class CartCondition {
      *
      * @var
      */
-    public $parsedRawValue;
+    private $parsedRawValue;
 
     /**
      * @param array $args (name, type, target, value)
