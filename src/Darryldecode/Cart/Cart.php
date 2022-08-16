@@ -18,7 +18,7 @@ class Cart
      *
      * @var
      */
-    protected $session;
+    protected $storage;
 
     /**
      * the event dispatcher
@@ -72,16 +72,16 @@ class Cart
     /**
      * our object constructor
      *
-     * @param $session
+     * @param $storage
      * @param $events
      * @param $instanceName
      * @param $session_key
      * @param $config
      */
-    public function __construct($session, $events, $instanceName, $session_key, $config)
+    public function __construct($storage, $events, $instanceName, $session_key, $config)
     {
         $this->events = $events;
-        $this->session = $session;
+        $this->storage = $storage;
         $this->instanceName = $instanceName;
         $this->sessionKey = $session_key;
         $this->sessionKeyCartItems = $this->sessionKey . '_cart_items';
@@ -343,7 +343,7 @@ class Cart
             return false;
         }
 
-        $this->session->put(
+        $this->storage->put(
             $this->sessionKeyCartItems,
             array()
         );
@@ -397,7 +397,7 @@ class Cart
      */
     public function getConditions()
     {
-        return new CartConditionCollection($this->session->get($this->sessionKeyCartConditions));
+        return new CartConditionCollection($this->storage->get($this->sessionKeyCartConditions));
     }
 
     /**
@@ -547,7 +547,7 @@ class Cart
      */
     public function clearCartConditions()
     {
-        $this->session->put(
+        $this->storage->put(
             $this->sessionKeyCartConditions,
             array()
         );
@@ -672,7 +672,7 @@ class Cart
      */
     public function getContent()
     {
-        return (new CartCollection($this->session->get($this->sessionKeyCartItems)))->reject(function($item) {
+        return (new CartCollection($this->storage->get($this->sessionKeyCartItems)))->reject(function($item) {
             return ! ($item instanceof ItemCollection);
         });
     }
@@ -743,7 +743,7 @@ class Cart
      */
     protected function save($cart)
     {
-        $this->session->put($this->sessionKeyCartItems, $cart);
+        $this->storage->put($this->sessionKeyCartItems, $cart);
     }
 
     /**
@@ -753,7 +753,7 @@ class Cart
      */
     protected function saveConditions($conditions)
     {
-        $this->session->put($this->sessionKeyCartConditions, $conditions);
+        $this->storage->put($this->sessionKeyCartConditions, $conditions);
     }
 
     /**
