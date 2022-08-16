@@ -71,6 +71,8 @@ class Cart
 
     protected $tempCart;
 
+    protected $tempConditions;
+
     /**
      * our object constructor
      *
@@ -109,6 +111,7 @@ class Cart
         $this->sessionKeyCartConditions = $this->sessionKey . '_cart_conditions';
 
         $this->tempCart = $this->getContentFromStorage();
+        $this->tempConditions = $this->getConditionsFromStorage();
 
         return $this;
     }
@@ -403,6 +406,10 @@ class Cart
      */
     public function getConditions()
     {
+        return $this->tempConditions;
+    }
+
+    public function getConditionsFromStorage() {
         return new CartConditionCollection($this->storage->get($this->sessionKeyCartConditions));
     }
 
@@ -553,6 +560,8 @@ class Cart
      */
     public function clearCartConditions()
     {
+        $this->tempConditions = new CartConditionCollection(array());
+
         $this->storage->put(
             $this->sessionKeyCartConditions,
             array()
@@ -764,6 +773,7 @@ class Cart
      */
     protected function saveConditions($conditions)
     {
+        $this->tempConditions = $conditions;
         $this->storage->put($this->sessionKeyCartConditions, $conditions);
     }
 
