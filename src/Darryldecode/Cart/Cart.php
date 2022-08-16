@@ -64,7 +64,7 @@ class Cart
 
     /**
      * This holds the currently added item id in cart for association
-     * 
+     *
      * @var
      */
     protected $currentItemId;
@@ -72,6 +72,8 @@ class Cart
     protected $tempCart;
 
     protected $tempConditions;
+
+    protected $saveOnlyToTempCart = false;
 
     /**
      * our object constructor
@@ -169,7 +171,10 @@ class Cart
             // the first argument is an array, now we will need to check if it is a multi dimensional
             // array, if so, we will iterate through each item and call add again
             if (Helpers::isMultiArray($id)) {
+                $this->saveOnlyToTempCart = true;
+                $i = 0;
                 foreach ($id as $item) {
+                    if (++$i === count($id)) { $this->saveOnlyToTempCart = false; }
                     $this->add(
                         $item['id'],
                         $item['name'],
@@ -763,7 +768,10 @@ class Cart
     protected function save($cart)
     {
         $this->tempCart = $cart;
-        $this->storage->put($this->sessionKeyCartItems, $cart);
+
+        if (! $this->saveOnlyToTempCart) {
+            $this->storage->put($this->sessionKeyCartItems, $cart);
+        }
     }
 
     /**
