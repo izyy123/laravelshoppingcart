@@ -30,9 +30,10 @@ class CartTest extends PHPUnit\Framework\TestCase
             new SessionMock(),
             $events,
             'shopping',
-            'SAMPLESESSIONKEY',
+            '',
             require(__DIR__ . '/helpers/configMock.php')
         );
+        $this->cart->session('SAMPLESESSIONKEY');
     }
 
     public function tearDown(): void

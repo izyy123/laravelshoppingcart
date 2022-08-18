@@ -33,9 +33,10 @@ class CartTestEvents extends PHPUnit\Framework\TestCase {
             new SessionMock(),
             $events,
             self::CART_INSTANCE_NAME,
-            'SAMPLESESSIONKEY',
+            '',
             require(__DIR__.'/helpers/configMock.php')
         );
+        $cart->session('SAMPLESESSIONKEY');
 
         $this->assertTrue(true);
     }
@@ -51,10 +52,10 @@ class CartTestEvents extends PHPUnit\Framework\TestCase {
             new SessionMock(),
             $events,
             self::CART_INSTANCE_NAME,
-            'SAMPLESESSIONKEY',
+            '',
             require(__DIR__.'/helpers/configMock.php')
         );
-
+        $cart->session('SAMPLESESSIONKEY');
         $cart->add(455, 'Sample Item', 100.99, 2, array());
 
         $this->assertTrue(true);
@@ -71,10 +72,10 @@ class CartTestEvents extends PHPUnit\Framework\TestCase {
             new SessionMock(),
             $events,
             self::CART_INSTANCE_NAME,
-            'SAMPLESESSIONKEY',
+            '',
             require(__DIR__.'/helpers/configMock.php')
         );
-
+        $cart->session('SAMPLESESSIONKEY');
         $cart->add(455, 'Sample Item 1', 100.99, 2, array());
         $cart->add(562, 'Sample Item 2', 100.99, 2, array());
 
@@ -116,9 +117,10 @@ class CartTestEvents extends PHPUnit\Framework\TestCase {
             new SessionMock(),
             $events,
             self::CART_INSTANCE_NAME,
-            'SAMPLESESSIONKEY',
+            '',
             require(__DIR__.'/helpers/configMock.php')
         );
+        $cart->session('SAMPLESESSIONKEY');
 
         $cart->add($items);
 
@@ -162,9 +164,10 @@ class CartTestEvents extends PHPUnit\Framework\TestCase {
             new SessionMock(),
             $events,
             self::CART_INSTANCE_NAME,
-            'SAMPLESESSIONKEY',
+            '',
             require(__DIR__.'/helpers/configMock.php')
         );
+        $cart->session('SAMPLESESSIONKEY');
 
         $cart->add($items);
 
@@ -210,9 +213,11 @@ class CartTestEvents extends PHPUnit\Framework\TestCase {
             new SessionMock(),
             $events,
             self::CART_INSTANCE_NAME,
-            'SAMPLESESSIONKEY',
+            '',
             require(__DIR__.'/helpers/configMock.php')
         );
+        
+        $cart->session('SAMPLESESSIONKEY');
 
         $cart->add($items);
 

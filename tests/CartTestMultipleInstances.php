@@ -36,6 +36,8 @@ class CartTestMultipleInstances extends PHPUnit\Framework\TestCase {
             require(__DIR__.'/helpers/configMock.php')
         );
 
+        $this->cart1->session('uniquesessionkey123');
+
         $this->cart2 = new Cart(
             new SessionMock(),
             $events,
@@ -43,6 +45,8 @@ class CartTestMultipleInstances extends PHPUnit\Framework\TestCase {
             'uniquesessionkey456',
             require(__DIR__.'/helpers/configMock.php')
         );
+
+        $this->cart2->session('uniquesessionkey456');
     }
 
     public function tearDown(): void

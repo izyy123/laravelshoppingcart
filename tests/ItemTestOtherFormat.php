@@ -28,9 +28,11 @@ class ItemTestOtherFormat extends PHPUnit\Framework\TestCase
             new SessionMock(),
             $events,
             'shopping',
-            'SAMPLESESSIONKEY',
+            '',
             require(__DIR__.'/helpers/configMockOtherFormat.php')
         );
+
+        $this->cart->session('SAMPLESESSIONKEY');
     }
 
     public function tearDown(): void
