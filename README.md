@@ -1,9 +1,72 @@
-# Laravel 5 & 6 & 7 Shopping Cart
-[![Build Status](https://travis-ci.org/darryldecode/laravelshoppingcart.svg?branch=master)](https://travis-ci.org/darryldecode/laravelshoppingcart)
-[![Total Downloads](https://poser.pugx.org/darryldecode/cart/d/total.svg)](https://packagist.org/packages/darryldecode/cart)
-[![License](https://poser.pugx.org/darryldecode/cart/license.svg)](https://packagist.org/packages/darryldecode/cart)
+# Fast Shopping Cart for Laravel 5 & 6 & 7 & 8 & 9 
+[![Latest Stable Version](http://poser.pugx.org/izyy123/cart/v)](https://packagist.org/packages/izyy123/cart) 
+[![Total Downloads](http://poser.pugx.org/izyy123/cart/downloads)](https://packagist.org/packages/izyy123/cart) 
+[![Latest Unstable Version](http://poser.pugx.org/izyy123/cart/v/unstable)](https://packagist.org/packages/izyy123/cart) 
+[![License](http://poser.pugx.org/izyy123/cart/license)](https://packagist.org/packages/izyy123/cart) 
+[![PHP Version Require](http://poser.pugx.org/izyy123/cart/require/php)](https://packagist.org/packages/izyy123/cart)
+[![License](https://poser.pugx.org/darryldecode/cart/license.svg)](https://packagist.org/packages/izyy123/cart)
 
 A Shopping Cart Implementation for Laravel Framework
+
+
+## IMPORTANT NOTICE
+
+**This package is forked from https://github.com/darryldecode/laravelshoppingcart.**
+
+**The main advantage of the package is that the efficiency of the cart is greatly improved.**
+
+**With the original package, every change is immediately saved directly to the storage (session, database...). The same applies to retrieving various data from the cart - if we want to obtain information about the total price of the products in the basket, first a query is made to the storage is made, then a recalculation is made.**
+
+**In a new package, everything is first stored in the cart instance. Data is saved to storage only when the save() method is called. The latter can greatly reduce number of executed queries, e.g. to the database.**
+
+Example:
+
+```php
+
+$cart = \Cart::session(123); // <-- if you are using database as a storage then 2 SELECT queries are executed (1 to get the cart items, 1 to get the cart conditions)
+
+$cart->add(array(
+    'id' => 1,
+    'name' => 'Product 1',
+    'price' => 100,
+    'quantity' => 4,
+    'attributes' => array()
+)); // <-- 0 queries are executed (everything is automatically saved only to the cart instance)
+
+$cart->add(array(
+    'id' => 2,
+    'name' => 'Product 2',
+    'price' => 150,
+    'quantity' => 2,
+    'attributes' => array()
+)); // <-- 0 queries are executed (everything is automatically saved only to the cart instance)
+
+$cart->addItemCondition(1, new CartCondition(array(
+            'name' => 'COUPON 101',
+            'type' => 'coupon',
+            'value' => '-5%',
+        )); // <-- 0 queries are executed (everything is automatically saved only to the cart instance)
+
+$cart->update($rowId,[
+	'quantity' => 2,
+	'price' => 98.67
+]); // <-- 0 queries are executed (everything is automatically saved only to the cart instance)
+
+$cart->save(); // <-- if you are using database as a storage then 2 INSERT or UPDATE queries are executed (1 to insert/update the cart items, 1 to insert/update the cart conditions)
+
+$cart->getSubTotal(); // <-- 0 queries are executed (all the necessary data for the calculation is obtained from the cart instance)
+
+
+```
+
+So what is new in this package?
+
+1. Using the session() method is mandatory.
+
+2. All changes to the cart are saved into storage only when the save() method is used.
+
+For more detailed instructions for use, see the instructions of the original package, which can be found below.
+
 
 ## QUICK PARTIAL DEMO
 
@@ -15,13 +78,9 @@ Git repo of the demo: https://github.com/darryldecode/laravelshoppingcart-demo
 
 Install the package through [Composer](http://getcomposer.org/).
 
-For Laravel 5.1~:
-`composer require "darryldecode/cart:~2.0"`
+For Laravel 5.5+:
 
-For Laravel 5.5, 5.6, or 5.7~:
-
-```composer require "darryldecode/cart:~4.0"``` or 
-```composer require "darryldecode/cart"```
+```composer require "izyy123/cart"```
 
 ## CONFIGURATION
 
