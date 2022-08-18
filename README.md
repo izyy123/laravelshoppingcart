@@ -2,8 +2,6 @@
 [![Latest Stable Version](http://poser.pugx.org/izyy123/cart/v)](https://packagist.org/packages/izyy123/cart) 
 [![Total Downloads](http://poser.pugx.org/izyy123/cart/downloads)](https://packagist.org/packages/izyy123/cart) 
 [![Latest Unstable Version](http://poser.pugx.org/izyy123/cart/v/unstable)](https://packagist.org/packages/izyy123/cart) 
-[![License](http://poser.pugx.org/izyy123/cart/license)](https://packagist.org/packages/izyy123/cart) 
-[![PHP Version Require](http://poser.pugx.org/izyy123/cart/require/php)](https://packagist.org/packages/izyy123/cart)
 [![License](https://poser.pugx.org/darryldecode/cart/license.svg)](https://packagist.org/packages/izyy123/cart)
 
 A Shopping Cart Implementation for Laravel Framework
@@ -59,20 +57,13 @@ $cart->getSubTotal(); // <-- 0 queries are executed (all the necessary data for 
 
 ```
 
-So what is new in this package?
+**So what is new in this package?**
 
-1. Using the session() method is mandatory.
+**1. Using the session() method is mandatory.**
 
-2. All changes to the cart are saved into storage only when the save() method is used.
+**2. All changes to the cart are saved into storage only when the save() method is used.**
 
-For more detailed instructions for use, see the instructions of the original package, which can be found below.
-
-
-## QUICK PARTIAL DEMO
-
-Demo: https://shoppingcart-demo.darrylfernandez.com/cart
-
-Git repo of the demo: https://github.com/darryldecode/laravelshoppingcart-demo
+**For more detailed instructions for use, see the instructions of the original package, which can be found below.**
 
 ## INSTALLATION
 
@@ -81,6 +72,13 @@ Install the package through [Composer](http://getcomposer.org/).
 For Laravel 5.5+:
 
 ```composer require "izyy123/cart"```
+
+## QUICK PARTIAL DEMO
+
+Demo: https://shoppingcart-demo.darrylfernandez.com/cart
+
+Git repo of the demo: https://github.com/darryldecode/laravelshoppingcart-demo
+
 
 ## CONFIGURATION
 
