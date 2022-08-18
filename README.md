@@ -1,7 +1,6 @@
 # Fast Shopping Cart for Laravel 5 & 6 & 7 & 8 & 9 
 [![Latest Stable Version](http://poser.pugx.org/izyy123/cart/v)](https://packagist.org/packages/izyy123/cart) 
 [![Total Downloads](http://poser.pugx.org/izyy123/cart/downloads)](https://packagist.org/packages/izyy123/cart) 
-[![Latest Unstable Version](http://poser.pugx.org/izyy123/cart/v/unstable)](https://packagist.org/packages/izyy123/cart) 
 [![License](https://poser.pugx.org/darryldecode/cart/license.svg)](https://packagist.org/packages/izyy123/cart)
 
 A Shopping Cart Implementation for Laravel Framework
@@ -45,7 +44,7 @@ $cart->addItemCondition(1, new CartCondition(array(
             'value' => '-5%',
         )); // <-- 0 queries are executed (everything is automatically saved only to the cart instance)
 
-$cart->update($rowId,[
+$cart->update(2,[
 	'quantity' => 2,
 	'price' => 98.67
 ]); // <-- 0 queries are executed (everything is automatically saved only to the cart instance)
