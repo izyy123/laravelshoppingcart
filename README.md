@@ -15,7 +15,7 @@ A Shopping Cart Implementation for Laravel Framework
 
 **The main advantage of the package is that the efficiency of the cart is greatly improved.**
 
-**With the original package, every change is immediately saved directly to the storage (session, database...). The same applies to retrieving various data from the cart - if we want to obtain information about the total price of the products in the basket, first a query is made to the storage is made, then a recalculation is made.**
+**With the original package, every change is immediately saved directly to the storage (session, database...). The same applies to retrieving various data from the cart - if we want to obtain information about the total price of the products in the cart, first a query to the storage is made, then a recalculation is made.**
 
 **In a new package, everything is first stored in the cart instance. Data is saved to storage only when the save() method is called. The latter can greatly reduce number of executed queries, e.g. to the database.**
 
