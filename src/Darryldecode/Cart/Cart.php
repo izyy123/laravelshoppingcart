@@ -73,8 +73,6 @@ class Cart
 
     protected $tempConditions;
 
-    protected $saveOnlyToTempCart = false;
-
     /**
      * our object constructor
      *
@@ -171,10 +169,8 @@ class Cart
             // the first argument is an array, now we will need to check if it is a multi dimensional
             // array, if so, we will iterate through each item and call add again
             if (Helpers::isMultiArray($id)) {
-                $this->saveOnlyToTempCart = true;
                 $i = 0;
                 foreach ($id as $item) {
-                    if (++$i === count($id)) { $this->saveOnlyToTempCart = false; }
                     $this->add(
                         $item['id'],
                         $item['name'],
@@ -283,7 +279,7 @@ class Cart
 
         $cart->put($id, $item);
 
-        $this->save($cart);
+        $this->saveTemp($cart);
 
         $this->fireEvent('updated', $item);
         return true;
@@ -339,7 +335,7 @@ class Cart
 
         $cart->forget($id);
 
-        $this->save($cart);
+        $this->saveTemp($cart);
 
         $this->fireEvent('removed', $id);
         return true;
@@ -399,7 +395,7 @@ class Cart
             return $condition->getOrder();
         });
 
-        $this->saveConditions($conditions);
+        $this->saveConditionsTemp($conditions);
 
         return $this;
     }
@@ -476,7 +472,7 @@ class Cart
 
         $conditions->pull($conditionName);
 
-        $this->saveConditions($conditions);
+        $this->saveConditionsTemp($conditions);
     }
 
     /**
@@ -753,7 +749,7 @@ class Cart
 
         $cart->put($id, new ItemCollection($item, $this->config));
 
-        $this->save($cart);
+        $this->saveTemp($cart);
 
         $this->fireEvent('added', $item);
 
@@ -761,28 +757,34 @@ class Cart
     }
 
     /**
-     * save the cart
+     * save the cart to cart instance
      *
      * @param $cart CartCollection
      */
-    protected function save($cart)
+    protected function saveTemp($cart)
     {
         $this->tempCart = $cart;
-
-        if (! $this->saveOnlyToTempCart) {
-            $this->storage->put($this->sessionKeyCartItems, $cart);
-        }
     }
 
     /**
-     * save the cart conditions
+     *
+     * save the cart and cart conditions to a storage
+     *
+     */
+    public function save() {
+        $this->storage->put($this->sessionKeyCartItems, $this->tempCart);
+        $this->storage->put($this->sessionKeyCartConditions, $this->tempConditions);
+    }
+
+
+    /**
+     * save the cart conditions to cart instance
      *
      * @param $conditions
      */
-    protected function saveConditions($conditions)
+    protected function saveConditionsTemp($conditions)
     {
         $this->tempConditions = $conditions;
-        $this->storage->put($this->sessionKeyCartConditions, $conditions);
     }
 
     /**
@@ -903,7 +905,7 @@ class Cart
 
         $cart->put($this->currentItemId, new ItemCollection($item, $this->config));
 
-        $this->save($cart);
+        $this->saveTemp($cart);
 
         return $this;
     }
