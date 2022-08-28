@@ -169,7 +169,6 @@ class Cart
             // the first argument is an array, now we will need to check if it is a multi dimensional
             // array, if so, we will iterate through each item and call add again
             if (Helpers::isMultiArray($id)) {
-                $i = 0;
                 foreach ($id as $item) {
                     $this->add(
                         $item['id'],
@@ -182,6 +181,9 @@ class Cart
                     );
                 }
             } else {
+
+                if (empty($id)) return $this;
+
                 $this->add(
                     $id['id'],
                     $id['name'],
